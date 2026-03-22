@@ -52,10 +52,21 @@ export default function NameCell({
 				onKeyDown={async (e) => {
 					if (e.key !== "Enter") return;
 					e.preventDefault();
-					if (items.length > 0) {
-						confirmProduct(items[0]);
+
+					if (value === "") {
+						const hasValidRows = table
+							.getRowModel()
+							.rows.some(
+								(r) => r.original.product_id !== null && r.index !== row.index,
+							);
+
+						if (hasValidRows) {
+							meta?.submit?.();
+						}
 						return;
 					}
+
+					if (items.length > 0) return;
 					const product = await getProductByName(value);
 					if (!product) return;
 					confirmProduct(product);
@@ -67,18 +78,7 @@ export default function NameCell({
 						<ComboboxItem
 							key={item.id}
 							value={item.name}
-							onSelect={() => {
-								meta?.updateRow?.(row.index, {
-									product_id: item.id,
-									code: String(item.code),
-									name: item.name,
-									price: item.price,
-									quantity: 1,
-									total: item.price,
-								});
-
-								meta?.addRow?.();
-							}}
+							onClick={() => confirmProduct(item)}
 						>
 							<div className="flex justify-between w-full">
 								<span>{item.name}</span>

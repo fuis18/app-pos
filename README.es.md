@@ -22,6 +22,14 @@
 - Seguimiento de **ventas** y filtros
 - **Base de datos local** con SQLite (Tauri SQL plugin)
 
+## UX del Registro
+
+- **Búsqueda autocompletada** — al escribir en el campo nombre se muestran productos coincidentes; clic o Enter para seleccionar
+- **Búsqueda por código** — ingresa un código de producto y presiona Enter/Tab para llenar la fila automáticamente
+- **Detección de duplicados** — si el producto ya existe en la tabla, se incrementa su cantidad en vez de duplicarlo
+- **Envío rápido** — presiona Enter en una fila vacía para enviar la venta (funciona desde código y nombre)
+- **Auto-focus** — al confirmar un producto se crea y enfoca una nueva fila vacía automáticamente
+
 ## Stack
 
 - **Frontend**

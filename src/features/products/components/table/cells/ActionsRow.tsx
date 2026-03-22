@@ -9,6 +9,7 @@ import {
 import type { Product } from "@/features/products/types/products.types";
 import type { CellContext } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
+import { useUserStore } from "@/store/userStore";
 import ProductDialog from "@/features/products/components/ProductDialog";
 
 export default function ActionsCell({
@@ -17,6 +18,8 @@ export default function ActionsCell({
 }: CellContext<Product, unknown>) {
 	const product = row.original;
 	const meta = table.options.meta;
+	const { user } = useUserStore();
+	const isLoggedIn = !!user;
 
 	const handleSoftDelete = async () => {
 		await meta?.onSoftDelete?.(product.id);
@@ -39,41 +42,64 @@ export default function ActionsCell({
 			</DropdownMenuTrigger>
 
 			<DropdownMenuContent align="end">
-				{product.state ? (
-					<ButtonGroup
-						orientation="vertical"
-						aria-label="Media controls"
-						className="h-fit w-full"
-					>
-						<ProductDialog product={product}>
-							<Button variant="ghost" className="w-full justify-start">
-								Editar
-							</Button>
-						</ProductDialog>
+				<ButtonGroup
+					orientation="vertical"
+					aria-label="Media controls"
+					className="h-fit w-full"
+				>
+					{isLoggedIn ? (
+						<>
+							{product.state ? (
+								<>
+									<ProductDialog product={product}>
+										<Button variant="ghost" className="w-full justify-start">
+											Editar
+										</Button>
+									</ProductDialog>
 
-						<DropdownMenuItem
-							className="text-sm font-medium cursor-pointer px-4 text-yellow-600"
-							onClick={handleSoftDelete}
-						>
-							Inactivar
-						</DropdownMenuItem>
+									<DropdownMenuItem
+										className="text-sm font-medium cursor-pointer px-4 text-yellow-600"
+										onClick={handleSoftDelete}
+									>
+										Inactivar
+									</DropdownMenuItem>
+								</>
+							) : (
+								<DropdownMenuItem
+									className="text-green-600 font-medium"
+									onClick={handleReactivate}
+								>
+									Reactivar
+								</DropdownMenuItem>
+							)}
 
-						<DropdownMenuItem
-							variant="destructive"
-							className="text-sm font-medium cursor-pointer px-4"
-							onClick={handleHardDelete}
-						>
-							Eliminar
-						</DropdownMenuItem>
-					</ButtonGroup>
-				) : (
-					<DropdownMenuItem
-						className="text-green-600 font-medium"
-						onClick={handleReactivate}
-					>
-						Reactivar
-					</DropdownMenuItem>
-				)}
+							<DropdownMenuItem
+								variant="destructive"
+								className="text-sm font-medium cursor-pointer px-4"
+								onClick={handleHardDelete}
+							>
+								Eliminar
+							</DropdownMenuItem>
+						</>
+					) : (
+						<>
+							<ProductDialog product={product}>
+								<Button variant="ghost" className="w-full justify-start">
+									Editar
+								</Button>
+							</ProductDialog>
+
+							{product.state && (
+								<DropdownMenuItem
+									className="text-sm font-medium cursor-pointer px-4 text-yellow-600"
+									onClick={handleSoftDelete}
+								>
+									Inactivar
+								</DropdownMenuItem>
+							)}
+						</>
+					)}
+				</ButtonGroup>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

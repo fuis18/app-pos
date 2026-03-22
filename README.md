@@ -22,6 +22,14 @@
 - **Sales** tracking and filtering
 - **Local database** via SQLite (Tauri SQL plugin)
 
+## UX Highlights
+
+- **Autocomplete search** — typing in the name field shows matching products in a dropdown; click or press Enter to select
+- **Code lookup** — enter a product code and press Enter/Tab to fill the row automatically
+- **Duplicate detection** — selecting an already-added product increments its quantity instead of creating a duplicate row
+- **Quick submit** — press Enter on an empty row to submit the sale (works from both code and name fields)
+- **Auto-focus** — after confirming a product, a new empty row is created and focused automatically
+
 ## Tech Stack
 
 - **Frontend**
