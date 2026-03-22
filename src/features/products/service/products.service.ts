@@ -32,7 +32,11 @@ export const productService = {
 		return repo.reactivateProduct(id);
 	},
 
-	async delete(id: number) {
+	async softDelete(id: number) {
 		return repo.softDeleteProduct(id);
+	},
+
+	async hardDelete(id: number) {
+		return repo.hardDeleteProduct(id);
 	},
 };

@@ -1,5 +1,6 @@
 // src\features\registry\hooks\useRegistryActions.ts
 import { EMPTY_REGISTRY_ROW } from "../types/constants";
+import type { FocusColumn } from "../types/focus.types";
 import type { Registry } from "../types/registry.types";
 import type { RegistryFocus } from "./useRegistryFocus";
 
@@ -7,7 +8,7 @@ export const useRegistryActions = (
 	setData: React.Dispatch<React.SetStateAction<Registry[]>>,
 	focus: RegistryFocus,
 ) => {
-	const addRow = (focusColumn: "code" | "name" = "code") => {
+	const addRow = (focusColumn: FocusColumn = focus.preference) => {
 		setData((prev) => {
 			const nextIndex = prev.length;
 			focus.focusCell(nextIndex, focusColumn);
@@ -113,7 +114,7 @@ export const useRegistryActions = (
 			// ➕ SOLO AQUÍ se crea nueva fila
 			if (createRow) {
 				const nextIndex = updated.length;
-				focus.focusCell(nextIndex, "code");
+				focus.focusCell(nextIndex, focus.preference);
 
 				return [...updated, { ...EMPTY_REGISTRY_ROW, id: nextIndex }];
 			}

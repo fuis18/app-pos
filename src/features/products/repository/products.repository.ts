@@ -128,3 +128,7 @@ export async function softDeleteProduct(id: number): Promise<void> {
 export async function reactivateProduct(id: number): Promise<void> {
 	return updateProduct(id, { state: true });
 }
+
+export async function hardDeleteProduct(id: number): Promise<void> {
+	return execute("DELETE FROM products WHERE id = ?", [id]);
+}

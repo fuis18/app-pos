@@ -16,7 +16,7 @@ export const columns: ColumnDef<Registry>[] = [
 	},
 	{
 		accessorKey: "code",
-		header: "Code",
+		header: "Código",
 		cell: CodeCell,
 	},
 	{

@@ -18,8 +18,12 @@ export default function ActionsCell({
 	const product = row.original;
 	const meta = table.options.meta;
 
-	const handleDelete = async () => {
-		await meta?.onDelete?.(product.id);
+	const handleSoftDelete = async () => {
+		await meta?.onSoftDelete?.(product.id);
+	};
+
+	const handleHardDelete = async () => {
+		await meta?.onHardDelete?.(product.id);
 	};
 
 	const handleReactivate = async () => {
@@ -48,9 +52,16 @@ export default function ActionsCell({
 						</ProductDialog>
 
 						<DropdownMenuItem
+							className="text-sm font-medium cursor-pointer px-4 text-yellow-600"
+							onClick={handleSoftDelete}
+						>
+							Inactivar
+						</DropdownMenuItem>
+
+						<DropdownMenuItem
 							variant="destructive"
 							className="text-sm font-medium cursor-pointer px-4"
-							onClick={handleDelete}
+							onClick={handleHardDelete}
 						>
 							Eliminar
 						</DropdownMenuItem>

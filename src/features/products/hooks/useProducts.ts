@@ -31,14 +31,18 @@ const useProducts = () => {
 	// --------------------
 	// ACTIONS
 	// --------------------
-	const handleDelete = async (id: number) => {
-		console.log(id);
-		await productService.reactive(id);
+	const handleSoftDelete = async (id: number) => {
+		await productService.softDelete(id);
+		reloadProducts();
+	};
+
+	const handleHardDelete = async (id: number) => {
+		await productService.hardDelete(id);
 		reloadProducts();
 	};
 
 	const handleReactivate = async (id: number) => {
-		await productService.delete(id);
+		await productService.reactive(id);
 		reloadProducts();
 	};
 
@@ -69,7 +73,8 @@ const useProducts = () => {
 		totalPages,
 		// actions
 		reloadAll,
-		handleDelete,
+		handleSoftDelete,
+		handleHardDelete,
 		handleReactivate,
 	};
 };

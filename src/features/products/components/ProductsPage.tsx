@@ -10,7 +10,8 @@ export const ProductsPage = () => {
 		setPage,
 		totalPages,
 		reloadAll,
-		handleDelete,
+		handleSoftDelete,
+		handleHardDelete,
 		handleReactivate,
 	} = useProducts();
 
@@ -20,7 +21,8 @@ export const ProductsPage = () => {
 				<ProductsTable
 					data={products}
 					meta={{
-						onDelete: handleDelete,
+						onSoftDelete: handleSoftDelete,
+						onHardDelete: handleHardDelete,
 						onReactivate: handleReactivate,
 					}}
 				/>
