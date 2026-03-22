@@ -1,0 +1,104 @@
+code,name,price
+10,Empanada,3.00
+11,Empanada de Carne,3.50
+12,Empanada de Pollo,3.50
+13,Empanada de Queso,3.00
+20,Ceviche,18.00
+21,Ceviche Mixto,22.00
+22,Tiradito,20.00
+23,Causa Limeña,12.00
+24,Causa de Atún,14.00
+30,Sopa de Pollo,10.00
+31,Sopa Criolla,12.00
+32,Caldo de Gallina,13.00
+33,Aguadito,11.00
+40,Arroz con Leche,6.00
+41,Mazamorra Morada,6.00
+42,Tres Leches,8.00
+43,Flan,7.00
+44,Brownie,5.00
+45,Pie de Limón,7.50
+50,Galleta de Soda,2.00
+51,Galleta de Chocolate,2.00
+52,Croissant,4.50
+53,Pan con Mantequilla,1.50
+54,Pan con Mermelada,2.00
+55,Tostada Francesa,5.00
+60,Soda,2.50
+61,Agua Mineral,2.00
+62,Agua sin Gas,1.50
+63,Gaseosa Cola,3.00
+64,Gaseosa Naranja,3.00
+65,Gaseosa Lima Limón,3.00
+70,Jugo de Piña,15.00
+71,Jugo de Fresa,13.00
+72,Jugo de Maracuyá,13.00
+73,Jugo de Mango,14.00
+74,Jugo de Melón,13.00
+75,Jugo de Naranja,12.00
+76,Jugo de Papaya,13.00
+77,Jugo de Sandia,12.00
+78,Limonada,10.00
+79,Limonada de Coco,12.00
+80,Chicha Morada,8.00
+81,Chicha de Jora,8.00
+82,Maracuyá Sour,18.00
+83,Pisco Sour,20.00
+84,Chilcano,18.00
+85,Café Americano,6.00
+86,Café Latte,8.00
+87,Cappuccino,8.00
+88,Chocolate Caliente,7.00
+89,Té,4.00
+90,Infusión de Hierbas,4.00
+100,Hamburguesa Clásica,18.00
+101,Hamburguesa con Queso,20.00
+102,Hamburguesa BBQ,22.00
+103,Hamburguesa Doble,25.00
+104,Hot Dog,12.00
+110,Pizza Margherita,28.00
+111,Pizza Pepperoni,32.00
+112,Pizza Hawaiana,30.00
+113,Pizza Cuatro Quesos,34.00
+114,Pizza Vegetariana,29.00
+120,Lomo Saltado,28.00
+121,Pollo a la Brasa (1/4),22.00
+122,Pollo a la Brasa (1/2),38.00
+123,Pollo a la Brasa (Entero),70.00
+124,Ají de Gallina,24.00
+125,Seco de Res,26.00
+126,Seco de Cordero,28.00
+127,Cabrito con Frijoles,30.00
+128,Estofado de Pollo,22.00
+129,Arroz con Pollo,20.00
+130,Anticuchos (6 piezas),18.00
+131,Churrasco,32.00
+132,Milanesa de Pollo,22.00
+133,Trucha Frita,26.00
+134,Sudado de Pescado,28.00
+140,Papas Fritas,8.00
+141,Papas a la Huancaína,10.00
+142,Ensalada Mixta,10.00
+143,Ensalada César,14.00
+144,Ensalada Caprese,13.00
+145,Arroz Blanco,5.00
+146,Arroz con Menestras,7.00
+147,Yuca Frita,8.00
+148,Choclo con Queso,6.00
+149,Tostones,7.00
+150,Guacamole con Chips,12.00
+160,Tacos de Pollo (3 piezas),16.00
+161,Tacos de Res (3 piezas),18.00
+162,Burrito de Pollo,18.00
+163,Quesadilla,15.00
+164,Nachos con Queso,14.00
+170,Sándwich Club,16.00
+171,Sándwich de Pollo,14.00
+172,Sándwich Vegetal,13.00
+173,Wrap de Pollo,15.00
+174,Panini de Jamón y Queso,14.00
+180,Helado de Vainilla,6.00
+181,Helado de Chocolate,6.00
+182,Helado de Fresa,6.00
+183,Sundae,10.00
+184,Waffle con Helado,14.00

@@ -1,4 +1,4 @@
-import SalesFilter from "@/features/sales/components/SalesFilter";
+import SalesOptions from "@/features/sales/components/SalesOptions";
 import { useSales } from "../hooks/useSales";
 import SalesTable from "@/features/sales/components/SalesTable";
 import SaleDialog from "@/features/sales/components/SaleDilog";
@@ -22,7 +22,7 @@ export const SalesPage = () => {
 
 	return (
 		<main className="px-1 gap-1 flex flex-col">
-			<SalesFilter
+			<SalesOptions
 				setPage={setPage}
 				selectedDate={selectedDate}
 				setSelectedDate={setSelectedDate}

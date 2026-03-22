@@ -95,6 +95,19 @@ export async function getSalesTotal(date?: {
 	return result[0].total;
 }
 
+export async function getAllSalesForExport(): Promise<Sale[]> {
+	return select<Sale>("SELECT id, date, total FROM sales ORDER BY date DESC");
+}
+
+export async function getAllSaleItemsForExport(): Promise<SaleItem[]> {
+	return select<SaleItem>(
+		`SELECT si.id, si.sale_id, si.product_id, si.quantity, si.price_at_sale, p.name, p.code
+     FROM sales_items si
+     JOIN products p ON p.id = si.product_id
+     ORDER BY si.sale_id`,
+	);
+}
+
 export async function createSale(sale: CreateSale) {
 	try {
 		const saleId = await insert("INSERT INTO sales (total) VALUES ($1)", [

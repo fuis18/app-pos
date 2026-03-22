@@ -5,7 +5,10 @@ import { useRef, useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import type { CreateProduct } from "@/features/products/types/products.types";
-import { createProduct } from "@/features/products/repository/products.repository";
+import {
+	createProduct,
+	getProductByCode,
+} from "@/features/products/repository/products.repository";
 import { parseProductsFile } from "../service/parseProductsFile";
 
 interface ImportDialogProps {
@@ -75,16 +78,29 @@ const ImportDialog = ({
 		try {
 			const rows = await parseProductsFile(file);
 
+			let imported = 0;
+			let skipped = 0;
+
 			for (const row of rows) {
+				const code = Number(row.code);
+				const existing = await getProductByCode(code);
+				if (existing) {
+					skipped++;
+					continue;
+				}
+
 				const product: CreateProduct = {
-					code: Number(row.code),
+					code,
 					name: row.name,
 					price: Number(row.price),
 				};
 				await createProduct(product);
+				imported++;
 			}
 
-			alert(`Importación completada: ${rows.length} productos`);
+			alert(
+				`Importación completada: ${imported} importados, ${skipped} omitidos (ya existían)`,
+			);
 			onImportSuccess?.();
 			setOpen(false);
 			setFile(null);

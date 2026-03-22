@@ -1,4 +1,4 @@
-// src/components/filtering/SalesFilter.tsx
+// src/components/filtering/SalesOptions.tsx
 "use client";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,8 +12,9 @@ import { useState } from "react";
 import type { DateRange } from "react-day-picker";
 import { format, startOfWeek, endOfWeek, parse } from "date-fns";
 import { CalendarIcon } from "lucide-react";
+import SalesExportDialog from "./SalesExportDialog";
 
-interface SalesFilterProps {
+interface SalesOptionsProps {
 	setPage: (page: number) => void;
 	selectedDate?: {
 		from?: string;
@@ -48,11 +49,11 @@ const formatTime12h = (time: string) => {
 	});
 };
 
-const SalesFilter = ({
+const SalesOptions = ({
 	setPage,
 	selectedDate,
 	setSelectedDate,
-}: SalesFilterProps) => {
+}: SalesOptionsProps) => {
 	const [open, setOpen] = useState(false);
 	const [openTime, setOpenTime] = useState(false);
 	const [date, setDate] = useState<DateRange | undefined>(() => {
@@ -89,7 +90,7 @@ const SalesFilter = ({
 	};
 
 	return (
-		<div className="SalesFilter">
+		<div className="SalesOptions">
 			<div className="flex gap-2 items-center">
 				<Popover open={open} onOpenChange={setOpen}>
 					<PopoverTrigger asChild>
@@ -170,9 +171,12 @@ const SalesFilter = ({
 						</div>
 					</PopoverContent>
 				</Popover>
+				<SalesExportDialog>
+					<Button variant="outline">Exportar</Button>
+				</SalesExportDialog>
 			</div>
 		</div>
 	);
 };
 
-export default SalesFilter;
+export default SalesOptions;

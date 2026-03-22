@@ -2,7 +2,7 @@ import { ButtonGroup } from "@/components/ui/button-group";
 import { Button } from "@/components/ui/button";
 import ProductDialog from "./ProductDialog";
 import ImportDialog from "./ProductImportDialog";
-import { exportProductsCsv } from "../service/exportProductsCsv";
+import ProductExportDialog from "./ProductExportDialog";
 
 interface ProductsOptionsProps {
 	loadProducts: () => Promise<void>;
@@ -19,9 +19,9 @@ const ProductsOptions = ({ loadProducts }: ProductsOptionsProps) => {
 				<Button variant="outline">Importar</Button>
 			</ImportDialog>
 
-			<Button variant="outline" onClick={exportProductsCsv}>
-				Exportar
-			</Button>
+			<ProductExportDialog>
+				<Button variant="outline">Exportar</Button>
+			</ProductExportDialog>
 		</ButtonGroup>
 	);
 };
