@@ -1,8 +1,8 @@
 import * as XLSX from "xlsx";
 import { salesService } from "./sales.service";
+import { saveFileAs } from "@/lib/saveFile";
 
-export async function exportSalesExcel(): Promise<string> {
-	const fileName = "ventas.xlsx";
+export async function exportSalesExcel(): Promise<string | null> {
 	const [sales, items] = await Promise.all([
 		salesService.exportAll(),
 		salesService.exportAllItems(),
@@ -29,16 +29,10 @@ export async function exportSalesExcel(): Promise<string> {
 	XLSX.utils.book_append_sheet(workbook, itemsSheet, "SaleItems");
 
 	const buffer = XLSX.write(workbook, { bookType: "xlsx", type: "array" });
-	const blob = new Blob([buffer], {
-		type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+
+	return saveFileAs({
+		defaultName: "ventas.xlsx",
+		filters: [{ name: "Excel", extensions: ["xlsx"] }],
+		content: new Uint8Array(buffer),
 	});
-	const url = URL.createObjectURL(blob);
-
-	const a = document.createElement("a");
-	a.href = url;
-	a.download = fileName;
-	a.click();
-
-	URL.revokeObjectURL(url);
-	return fileName;
 }

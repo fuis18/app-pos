@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Form } from "@/components/ui/form";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 import { userSchema } from "@/features/users/types/userSchema";
 import type { FormType } from "@/features/users/types/userSchema";
 import type { SubmitHandler } from "react-hook-form";
@@ -19,6 +20,8 @@ const Login = () => {
 		tokenValidator: (token) => token === CONFIG.TOKEN,
 	});
 
+	const [successMessage, setSuccessMessage] = useState("");
+
 	const form = useForm<FormType>({
 		resolver: zodResolver(userSchema),
 		defaultValues: {
@@ -29,6 +32,7 @@ const Login = () => {
 
 	const onSubmit: SubmitHandler<FormType> = async (data) => {
 		try {
+			setSuccessMessage("");
 			const parsed = userSchema.parse(data);
 
 			const user = await userService.getUser({
@@ -39,7 +43,9 @@ const Login = () => {
 			useUserStore.setState({ user: user[0] });
 
 			form.reset();
+			setSuccessMessage("Se inicio la sesion correctamente");
 		} catch (error) {
+			setSuccessMessage("");
 			form.setError("root", {
 				type: "server",
 				message:
@@ -84,6 +90,9 @@ const Login = () => {
 						)}
 					</div>
 					<div className="form-field">
+						{successMessage && (
+							<p className="text-green-500 text-sm">{successMessage}</p>
+						)}
 						{form.formState.errors.root && (
 							<p className="text-red-600 text-sm">
 								{form.formState.errors.root.message}

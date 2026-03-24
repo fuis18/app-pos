@@ -17,6 +17,7 @@ const SignUp = () => {
 	});
 
 	const [canGoToLogin, setCanGoToLogin] = useState(false);
+	const [successMessage, setSuccessMessage] = useState("");
 	const navigate = useNavigate();
 
 	const form = useForm<FormType>({
@@ -29,6 +30,7 @@ const SignUp = () => {
 
 	const onSubmit: SubmitHandler<FormType> = async (data) => {
 		try {
+			setSuccessMessage("");
 			const parsed = userSchema.parse(data);
 
 			await userService.createUser({
@@ -38,7 +40,9 @@ const SignUp = () => {
 
 			form.reset();
 			setCanGoToLogin(true);
+			setSuccessMessage("Se registro correctamente");
 		} catch (error) {
+			setSuccessMessage("");
 			setCanGoToLogin(false);
 			form.setError("root", {
 				type: "server",
@@ -84,6 +88,9 @@ const SignUp = () => {
 						)}
 					</div>
 					<div className="form-field">
+						{successMessage && (
+							<p className="text-green-500 text-sm">{successMessage}</p>
+						)}
 						{form.formState.errors.root && (
 							<p className="text-red-600 text-sm">
 								{form.formState.errors.root.message}
