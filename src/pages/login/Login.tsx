@@ -40,6 +40,10 @@ const Login = () => {
 				password: parsed.password,
 			});
 
+			if (!user || user.length === 0) {
+				throw new Error("Usuario o contraseña incorrectos");
+			}
+
 			useUserStore.setState({ user: user[0] });
 
 			form.reset();

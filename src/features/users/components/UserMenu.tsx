@@ -30,7 +30,7 @@ const UserMenu = () => {
 			</DropdownMenuTrigger>
 			<DropdownMenuContent>
 				<DropdownMenuGroup>
-					<DropdownMenuLabel>My Account</DropdownMenuLabel>
+					<DropdownMenuLabel>Mi Cuenta</DropdownMenuLabel>
 					{/* <DropdownMenuItem>Settings</DropdownMenuItem> */}
 					<DropdownMenuItem onClick={() => setUser(null)}>
 						Cerrar Sesión

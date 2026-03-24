@@ -22,7 +22,9 @@ export const useRegistryActions = (
 
 			const filtered = prev.filter((row) => !ids.has(row.id));
 
-			return filtered.length === 0 ? [EMPTY_REGISTRY_ROW] : filtered;
+			const result = filtered.length === 0 ? [EMPTY_REGISTRY_ROW] : filtered;
+
+			return result.map((row, i) => ({ ...row, id: i }));
 		});
 	};
 

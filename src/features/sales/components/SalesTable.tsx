@@ -46,7 +46,7 @@ const SalesTable = ({ columns, data, onRowClick }: SalesTableProps) => {
 					table.getRowModel().rows.map((row) => (
 						<TableRow
 							key={row.id}
-							className="SalesTable-row cursor-pointer hover:bg-gray-100"
+							className="SalesTable-row cursor-pointer hover:bg-muted"
 							onClick={() => onRowClick?.(row.original.id)}
 						>
 							{row.getVisibleCells().map((cell) => (
