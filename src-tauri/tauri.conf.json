@@ -1,6 +1,6 @@
 {
 	"$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-	"productName": "app-pos",
+	"productName": "App POS",
 	"version": "1.2.0",
 	"identifier": "com.app-pos.dev",
 	"build": {
@@ -12,7 +12,7 @@
 	"app": {
 		"windows": [
 			{
-				"title": "Restaurant App",
+				"title": "App POS",
 				"width": 900,
 				"height": 700,
 				"resizable": true,

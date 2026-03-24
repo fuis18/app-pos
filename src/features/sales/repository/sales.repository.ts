@@ -105,17 +105,59 @@ export async function getSalesTotal(date?: {
 	return result[0].total;
 }
 
-export async function getAllSalesForExport(): Promise<Sale[]> {
-	return select<Sale>("SELECT id, date, total FROM sales ORDER BY date DESC");
+export async function getAllSalesForExport(date?: {
+	from?: string;
+	to?: string;
+	timeFrom?: string;
+	timeTo?: string;
+}): Promise<Sale[]> {
+	let query = "SELECT id, date, total FROM sales";
+	const params: DbParam[] = [];
+
+	const where: string[] = [];
+	if (date?.from && date?.to) {
+		where.push("date(date, 'localtime') BETWEEN date(?) AND date(?)");
+		params.push(date.from, date.to);
+	}
+	if (date?.timeFrom && date?.timeTo) {
+		where.push("time(date, 'localtime') BETWEEN time(?) AND time(?)");
+		params.push(date.timeFrom, date.timeTo);
+	}
+	if (where.length) {
+		query += ` WHERE ${where.join(" AND ")}`;
+	}
+
+	query += " ORDER BY date DESC";
+	return select<Sale>(query, params);
 }
 
-export async function getAllSaleItemsForExport(): Promise<SaleItem[]> {
-	return select<SaleItem>(
-		`SELECT si.id, si.sale_id, si.product_id, si.quantity, si.price_at_sale, p.name, p.code
+export async function getAllSaleItemsForExport(date?: {
+	from?: string;
+	to?: string;
+	timeFrom?: string;
+	timeTo?: string;
+}): Promise<SaleItem[]> {
+	let query = `SELECT si.id, si.sale_id, si.product_id, si.quantity, si.price_at_sale, p.name, p.code
      FROM sales_items si
-     JOIN products p ON p.id = si.product_id
-     ORDER BY si.sale_id`,
-	);
+     JOIN products p ON p.id = si.product_id`;
+	const params: DbParam[] = [];
+
+	const where: string[] = [];
+	if (date?.from && date?.to) {
+		where.push("date(s.date, 'localtime') BETWEEN date(?) AND date(?)");
+		params.push(date.from, date.to);
+	}
+	if (date?.timeFrom && date?.timeTo) {
+		where.push("time(s.date, 'localtime') BETWEEN time(?) AND time(?)");
+		params.push(date.timeFrom, date.timeTo);
+	}
+	if (where.length) {
+		query += " JOIN sales s ON s.id = si.sale_id";
+		query += ` WHERE ${where.join(" AND ")}`;
+	}
+
+	query += " ORDER BY si.sale_id";
+	return select<SaleItem>(query, params);
 }
 
 export async function createSale(sale: CreateSale) {

@@ -32,12 +32,22 @@ export const salesService = {
 		return repo.createSale(sale);
 	},
 
-	async exportAll(): Promise<Sale[]> {
-		return repo.getAllSalesForExport();
+	async exportAll(date?: {
+		from?: string;
+		to?: string;
+		timeFrom?: string;
+		timeTo?: string;
+	}): Promise<Sale[]> {
+		return repo.getAllSalesForExport(date);
 	},
 
-	async exportAllItems(): Promise<SaleItem[]> {
-		return repo.getAllSaleItemsForExport();
+	async exportAllItems(date?: {
+		from?: string;
+		to?: string;
+		timeFrom?: string;
+		timeTo?: string;
+	}): Promise<SaleItem[]> {
+		return repo.getAllSaleItemsForExport(date);
 	},
 
 	async reportSale(saleId: number, reason: string): Promise<number> {

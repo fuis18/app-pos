@@ -1,4 +1,4 @@
-# Restaurant App POS
+# App POS
 
 ![Tauri](https://img.shields.io/badge/Tauri-2.x-blue)
 ![Bun](https://img.shields.io/badge/Bun-runtime-black)

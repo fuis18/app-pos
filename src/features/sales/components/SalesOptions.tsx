@@ -171,7 +171,7 @@ const SalesOptions = ({
 						</div>
 					</PopoverContent>
 				</Popover>
-				<SalesExportDialog>
+				<SalesExportDialog dateRange={selectedDate}>
 					<Button variant="outline">Exportar</Button>
 				</SalesExportDialog>
 			</div>

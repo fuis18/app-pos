@@ -2,10 +2,15 @@ import * as XLSX from "xlsx";
 import { salesService } from "./sales.service";
 import { saveFileAs } from "@/lib/saveFile";
 
-export async function exportSalesExcel(): Promise<string | null> {
+export async function exportSalesExcel(date?: {
+	from?: string;
+	to?: string;
+	timeFrom?: string;
+	timeTo?: string;
+}): Promise<string | null> {
 	const [sales, items] = await Promise.all([
-		salesService.exportAll(),
-		salesService.exportAllItems(),
+		salesService.exportAll(date),
+		salesService.exportAllItems(date),
 	]);
 
 	const workbook = XLSX.utils.book_new();
