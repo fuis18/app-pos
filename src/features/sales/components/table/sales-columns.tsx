@@ -2,9 +2,9 @@ import type { Sale } from "@/features/sales/types/sales.types";
 import type { ColumnDef } from "@tanstack/react-table";
 import DayCell from "./DayRow";
 import { Button } from "@/components/ui/button";
-import { ArrowUpDown } from "lucide-react";
+import { ArrowUpDown, Flag } from "lucide-react";
 
-export const columns: ColumnDef<Sale>[] = [
+const baseColumns: ColumnDef<Sale>[] = [
 	{
 		accessorKey: "id",
 		header: "ID",
@@ -40,3 +40,38 @@ export const columns: ColumnDef<Sale>[] = [
 		cell: ({ row }) => `S/.${row.original.total.toFixed(2)}`,
 	},
 ];
+
+export function getSalesColumns(options?: {
+	onReport?: (saleId: number) => void;
+	reportedSaleIds?: Set<number>;
+}): ColumnDef<Sale>[] {
+	if (!options?.onReport) return baseColumns;
+
+	return [
+		...baseColumns,
+		{
+			id: "reportAction",
+			header: "Reporte",
+			cell: ({ row }) => {
+				const isReported = options.reportedSaleIds?.has(row.original.id);
+				return (
+					<Button
+						variant="ghost"
+						size="sm"
+						className="h-min"
+						disabled={isReported}
+						onClick={(e) => {
+							e.stopPropagation();
+							options.onReport?.(row.original.id);
+						}}
+						title="Reportar venta"
+					>
+						<Flag
+							className={`${isReported ? "text-muted-foreground" : "text-red-600 dark:text-red-400"}`}
+						/>
+					</Button>
+				);
+			},
+		},
+	];
+}

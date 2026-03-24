@@ -132,3 +132,29 @@ export async function reactivateProduct(id: number): Promise<void> {
 export async function hardDeleteProduct(id: number): Promise<void> {
 	return execute("DELETE FROM products WHERE id = ?", [id]);
 }
+
+/* ---------- Batch operations ---------- */
+
+export async function softDeleteProducts(ids: number[]): Promise<void> {
+	if (!ids.length) return;
+	const placeholders = ids.map(() => "?").join(", ");
+	return execute(
+		`UPDATE products SET state = 0 WHERE id IN (${placeholders})`,
+		ids,
+	);
+}
+
+export async function reactivateProducts(ids: number[]): Promise<void> {
+	if (!ids.length) return;
+	const placeholders = ids.map(() => "?").join(", ");
+	return execute(
+		`UPDATE products SET state = 1 WHERE id IN (${placeholders})`,
+		ids,
+	);
+}
+
+export async function hardDeleteProducts(ids: number[]): Promise<void> {
+	if (!ids.length) return;
+	const placeholders = ids.map(() => "?").join(", ");
+	return execute(`DELETE FROM products WHERE id IN (${placeholders})`, ids);
+}

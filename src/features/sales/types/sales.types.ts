@@ -28,9 +28,17 @@ export interface SaleItem {
 	code?: string;
 }
 
+export interface SaleReport {
+	id: number;
+	sale_id: number;
+	reason: string;
+	reported_at: string;
+}
+
 export interface SalesTableProps {
 	data: Sale[];
 	columns: ColumnDef<Sale>[];
 	meta?: Record<string, unknown>;
 	onRowClick?: (saleId: number) => void;
+	reportedSaleIds?: Set<number>;
 }

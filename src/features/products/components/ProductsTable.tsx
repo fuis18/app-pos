@@ -11,8 +11,12 @@ import { flexRender } from "@tanstack/react-table";
 import useProductsTable from "./table/hooks/useProductsTable";
 import type { ProductsTableProps } from "../types/products.types";
 
-const ProductsTable = ({ data, meta }: ProductsTableProps) => {
-	const table = useProductsTable({ data, meta });
+const ProductsTable = ({
+	data,
+	meta,
+	onSelectionChange,
+}: ProductsTableProps) => {
+	const table = useProductsTable({ data, meta, onSelectionChange });
 
 	return (
 		<Table className="ProductsTable">
@@ -35,7 +39,11 @@ const ProductsTable = ({ data, meta }: ProductsTableProps) => {
 			<TableBody>
 				{table.getRowModel().rows?.length ? (
 					table.getRowModel().rows.map((row) => (
-						<TableRow key={row.id} className="ProductsTable-row">
+						<TableRow
+							key={row.id}
+							data-state={row.getIsSelected() && "selected"}
+							className="ProductsTable-row"
+						>
 							{row.getVisibleCells().map((cell) => (
 								<TableCell key={cell.id}>
 									{flexRender(cell.column.columnDef.cell, cell.getContext())}

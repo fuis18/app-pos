@@ -1,5 +1,10 @@
 import * as repo from "../repository/sales.repository";
-import type { CreateSale, Sale, SaleItem } from "../types/sales.types";
+import type {
+	CreateSale,
+	Sale,
+	SaleItem,
+	SaleReport,
+} from "../types/sales.types";
 
 export const salesService = {
 	async findAll(
@@ -33,5 +38,25 @@ export const salesService = {
 
 	async exportAllItems(): Promise<SaleItem[]> {
 		return repo.getAllSaleItemsForExport();
+	},
+
+	async reportSale(saleId: number, reason: string): Promise<number> {
+		return repo.createSaleReport(saleId, reason);
+	},
+
+	async getReportedSaleIds(): Promise<Set<number>> {
+		return repo.getReportedSaleIds();
+	},
+
+	async getSaleReport(saleId: number): Promise<SaleReport | null> {
+		return repo.getSaleReport(saleId);
+	},
+
+	async cancelSaleReport(saleId: number): Promise<void> {
+		return repo.cancelSaleReport(saleId);
+	},
+
+	async deleteSale(saleId: number): Promise<void> {
+		return repo.deleteSale(saleId);
 	},
 };

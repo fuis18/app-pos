@@ -1,7 +1,9 @@
+import { useState } from "react";
 import PagTable from "@/components/PaginationTable";
 import useProducts from "../hooks/useProducts";
 import ProductsTable from "./ProductsTable";
 import ProductsOptions from "./ProductsOptions";
+import type { Product } from "../types/products.types";
 
 export const ProductsPage = () => {
 	const {
@@ -13,7 +15,12 @@ export const ProductsPage = () => {
 		handleSoftDelete,
 		handleHardDelete,
 		handleReactivate,
+		handleBatchSoftDelete,
+		handleBatchReactivate,
+		handleBatchHardDelete,
 	} = useProducts();
+
+	const [selectedRows, setSelectedRows] = useState<Product[]>([]);
 
 	return (
 		<main className="ProductsPage-container">
@@ -25,10 +32,17 @@ export const ProductsPage = () => {
 						onHardDelete: handleHardDelete,
 						onReactivate: handleReactivate,
 					}}
+					onSelectionChange={setSelectedRows}
 				/>
 				<PagTable page={page} setPage={setPage} totalPages={totalPages} />
 			</div>
-			<ProductsOptions loadProducts={reloadAll} />
+			<ProductsOptions
+				loadProducts={reloadAll}
+				selectedRows={selectedRows}
+				onBatchSoftDelete={handleBatchSoftDelete}
+				onBatchReactivate={handleBatchReactivate}
+				onBatchHardDelete={handleBatchHardDelete}
+			/>
 		</main>
 	);
 };

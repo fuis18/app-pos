@@ -1,5 +1,5 @@
 // src/features/sales/useSales.ts
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CONFIG } from "@/constants/config";
 import { salesService } from "../service/sales.service";
 import type { Sale, SaleItem } from "@/features/sales/types/sales.types";
@@ -49,13 +49,16 @@ export function useSales() {
 	// DIALOG
 	// --------------------
 	const [dialogOpen, setDialogOpen] = useState(false);
+	const [selectedSaleId, setSelectedSaleId] = useState<number | null>(null);
 
 	const closeDialog = () => {
 		setDialogOpen(false);
 		setSelectedSaleItems(null);
+		setSelectedSaleId(null);
 	};
 
 	const openSaleDetail = async (saleId: number) => {
+		setSelectedSaleId(saleId);
 		setDialogOpen(true);
 		setSelectedSaleItems(null); // loading state
 
@@ -64,23 +67,55 @@ export function useSales() {
 	};
 
 	// --------------------
+	// REPORT
+	// --------------------
+	const [reportedSaleIds, setReportedSaleIds] = useState<Set<number>>(
+		new Set(),
+	);
+	const [reportDialogOpen, setReportDialogOpen] = useState(false);
+	const [reportingSaleId, setReportingSaleId] = useState<number | null>(null);
+
+	const openReportDialog = useCallback((saleId: number) => {
+		setReportingSaleId(saleId);
+		setReportDialogOpen(true);
+	}, []);
+
+	const closeReportDialog = () => {
+		setReportDialogOpen(false);
+		setReportingSaleId(null);
+	};
+
+	const refreshSales = useCallback(async () => {
+		const [salesData, total, amount, reported] = await Promise.all([
+			salesService.findAll(limit, offset, selectedDate),
+			salesService.count(selectedDate),
+			getSalesTotal(selectedDate),
+			salesService.getReportedSaleIds(),
+		]);
+
+		setSales(salesData);
+		setTotalPages(Math.ceil(total / limit));
+		setTotalAmount(amount);
+		setReportedSaleIds(reported);
+	}, [limit, offset, selectedDate]);
+
+	const submitReport = async (reason: string) => {
+		if (reportingSaleId === null) return;
+		await salesService.reportSale(reportingSaleId, reason);
+		closeReportDialog();
+		await refreshSales();
+	};
+
+	// --------------------
 	// EFFECTS
 	// --------------------
 	useEffect(() => {
-		const fetchSales = async () => {
-			const [salesData, total, amount] = await Promise.all([
-				salesService.findAll(limit, offset, selectedDate),
-				salesService.count(selectedDate),
-				getSalesTotal(selectedDate),
-			]);
+		const timeoutId = window.setTimeout(() => {
+			void refreshSales();
+		}, 0);
 
-			setSales(salesData);
-			setTotalPages(Math.ceil(total / limit));
-			setTotalAmount(amount);
-		};
-
-		void fetchSales();
-	}, [limit, offset, selectedDate]);
+		return () => window.clearTimeout(timeoutId);
+	}, [refreshSales]);
 
 	return {
 		// data
@@ -105,6 +140,15 @@ export function useSales() {
 		dialogOpen,
 		openSaleDetail,
 		closeDialog,
+		selectedSaleId,
 		selectedSaleItems,
+
+		// report
+		reportedSaleIds,
+		reportDialogOpen,
+		openReportDialog,
+		closeReportDialog,
+		submitReport,
+		refreshSales,
 	};
 }

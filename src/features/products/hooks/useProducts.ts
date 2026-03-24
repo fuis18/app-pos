@@ -47,6 +47,24 @@ const useProducts = () => {
 	};
 
 	// --------------------
+	// BATCH ACTIONS
+	// --------------------
+	const handleBatchSoftDelete = async (ids: number[]) => {
+		await productService.softDeleteBatch(ids);
+		reloadProducts();
+	};
+
+	const handleBatchReactivate = async (ids: number[]) => {
+		await productService.reactiveBatch(ids);
+		reloadProducts();
+	};
+
+	const handleBatchHardDelete = async (ids: number[]) => {
+		await productService.hardDeleteBatch(ids);
+		reloadProducts();
+	};
+
+	// --------------------
 	// EFFECTS
 	// --------------------
 	useEffect(() => {
@@ -76,6 +94,10 @@ const useProducts = () => {
 		handleSoftDelete,
 		handleHardDelete,
 		handleReactivate,
+		// batch actions
+		handleBatchSoftDelete,
+		handleBatchReactivate,
+		handleBatchHardDelete,
 	};
 };
 export default useProducts;

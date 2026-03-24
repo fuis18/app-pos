@@ -1,6 +1,6 @@
 [package]
 name = "App"
-version = "1.1.0"
+version = "1.2.0"
 description = "An APP for a restaurant type POS"
 authors = ["fuis18"]
 license = "MIT"

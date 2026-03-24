@@ -26,5 +26,11 @@ pub fn sqlite_migrations() -> Vec<Migration> {
             sql: include_str!("./migrations/004_create_users.sql"),
             kind: MigrationKind::Up,
         },
+        Migration {
+            version: 5,
+            description: "create sale_reports table",
+            sql: include_str!("./migrations/005_create_sale_reports.sql"),
+            kind: MigrationKind::Up,
+        },
     ]
 }

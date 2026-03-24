@@ -28,6 +28,8 @@ import {
 import {
 	createProduct,
 	updateProduct,
+	getProductByCode,
+	getProductByName,
 } from "@/features/products/repository/products.repository";
 
 interface ProductDialogProps {
@@ -69,6 +71,18 @@ const ProductDialog = ({
 	const onSubmit = async (data: ProductFormInput) => {
 		try {
 			const parsed = productSchema.parse(data);
+
+			const existingByCode = await getProductByCode(parsed.code);
+			if (existingByCode && (!isEdit || existingByCode.id !== product?.id)) {
+				form.setError("code", { type: "manual", message: "Código existente" });
+				return;
+			}
+
+			const existingByName = await getProductByName(parsed.name);
+			if (existingByName && (!isEdit || existingByName.id !== product?.id)) {
+				form.setError("name", { type: "manual", message: "Nombre existente" });
+				return;
+			}
 
 			if (isEdit && product) {
 				const { dirtyFields } = form.formState;

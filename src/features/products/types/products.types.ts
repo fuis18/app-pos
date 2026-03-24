@@ -4,6 +4,7 @@ import { z } from "zod";
 export interface ProductsTableProps {
 	data: Product[];
 	meta?: TableMeta<Product>;
+	onSelectionChange?: (rows: Product[]) => void;
 }
 
 /* ---------- Entity ---------- */
@@ -35,7 +36,7 @@ export type UpdateProduct = Partial<CreateProduct> & {
 /* ---------- Validation ---------- */
 export const productSchema = z.object({
 	code: z.coerce.number().positive("Código inválido"),
-	name: z.string().min(3, "Nombre inválido").max(50, "Máximo 50 caracteres"),
+	name: z.string().min(3, "Nombre inválido").max(30, "Máximo 30 caracteres"),
 	price: z.coerce.number().positive("Precio inválido"),
 });
 

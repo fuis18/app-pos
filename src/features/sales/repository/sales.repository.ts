@@ -1,6 +1,11 @@
 // src\features\sales\sales.repository.ts
 import { execute, insert, select, type DbParam } from "@/database/index.ts";
-import type { CreateSale, Sale, SaleItem } from "../types/sales.types";
+import type {
+	CreateSale,
+	Sale,
+	SaleItem,
+	SaleReport,
+} from "../types/sales.types";
 
 export async function getAllSales(
 	limit: number,
@@ -75,20 +80,25 @@ export async function getSalesTotal(date?: {
 	timeFrom?: string;
 	timeTo?: string;
 }): Promise<number> {
-	let query = "SELECT COALESCE(SUM(total), 0) as total FROM sales";
+	let query = `
+		SELECT COALESCE(SUM(s.total), 0) as total
+		FROM sales s
+		LEFT JOIN sale_reports sr ON sr.sale_id = s.id
+		WHERE sr.sale_id IS NULL
+	`;
 	const params: DbParam[] = [];
 
 	const where: string[] = [];
 	if (date?.from && date?.to) {
-		where.push("date(date, 'localtime') BETWEEN date(?) AND date(?)");
+		where.push("date(s.date, 'localtime') BETWEEN date(?) AND date(?)");
 		params.push(date.from, date.to);
 	}
 	if (date?.timeFrom && date?.timeTo) {
-		where.push("time(date, 'localtime') BETWEEN time(?) AND time(?)");
+		where.push("time(s.date, 'localtime') BETWEEN time(?) AND time(?)");
 		params.push(date.timeFrom, date.timeTo);
 	}
 	if (where.length) {
-		query += ` WHERE ${where.join(" AND ")}`;
+		query += ` AND ${where.join(" AND ")}`;
 	}
 
 	const result = await select<{ total: number }>(query, params);
@@ -127,4 +137,41 @@ export async function createSale(sale: CreateSale) {
 		console.error(err);
 		throw err;
 	}
+}
+
+export async function createSaleReport(
+	saleId: number,
+	reason: string,
+): Promise<number> {
+	return insert("INSERT INTO sale_reports (sale_id, reason) VALUES ($1, $2)", [
+		saleId,
+		reason,
+	]);
+}
+
+export async function getReportedSaleIds(): Promise<Set<number>> {
+	const rows = await select<{ sale_id: number }>(
+		"SELECT sale_id FROM sale_reports",
+	);
+	return new Set(rows.map((r) => r.sale_id));
+}
+
+export async function getSaleReport(
+	saleId: number,
+): Promise<SaleReport | null> {
+	const rows = await select<SaleReport>(
+		"SELECT id, sale_id, reason, reported_at FROM sale_reports WHERE sale_id = $1",
+		[saleId],
+	);
+	return rows[0] ?? null;
+}
+
+export async function cancelSaleReport(saleId: number): Promise<void> {
+	await execute("DELETE FROM sale_reports WHERE sale_id = $1", [saleId]);
+}
+
+export async function deleteSale(saleId: number): Promise<void> {
+	await execute("DELETE FROM sale_reports WHERE sale_id = $1", [saleId]);
+	await execute("DELETE FROM sales_items WHERE sale_id = $1", [saleId]);
+	await execute("DELETE FROM sales WHERE id = $1", [saleId]);
 }

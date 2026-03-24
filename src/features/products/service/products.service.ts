@@ -39,4 +39,16 @@ export const productService = {
 	async hardDelete(id: number) {
 		return repo.hardDeleteProduct(id);
 	},
+
+	async softDeleteBatch(ids: number[]) {
+		return repo.softDeleteProducts(ids);
+	},
+
+	async reactiveBatch(ids: number[]) {
+		return repo.reactivateProducts(ids);
+	},
+
+	async hardDeleteBatch(ids: number[]) {
+		return repo.hardDeleteProducts(ids);
+	},
 };

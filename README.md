@@ -20,6 +20,9 @@
 - **Registry / inventory** management
 - **Products** CRUD + import/export (CSV/XLSX)
 - **Sales** tracking and filtering
+- **Sales reports** by non-logged users (flag icon + reason, min 20 chars)
+- **Admin report actions** in sale detail: cancel report or delete sale
+- **Totals exclude reported sales** from the main Sales summary
 - **Local database** via SQLite (Tauri SQL plugin)
 
 ## UX Highlights
@@ -85,6 +88,12 @@ bun tauri dev
 ## Database (SQLite)
 
 This app uses SQLite through Tauri.
+
+Recent schema additions include `sale_reports` to persist:
+
+- `sale_id` (unique per sale)
+- `reason`
+- `reported_at` timestamp
 
 If you need to add the SQL plugin (already included in this repo):
 

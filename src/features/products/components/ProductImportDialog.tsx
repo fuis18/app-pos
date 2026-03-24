@@ -4,10 +4,10 @@
 import { useRef, useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import type { CreateProduct } from "@/features/products/types/products.types";
 import {
 	createProduct,
 	getProductByCode,
+	updateProduct,
 } from "@/features/products/repository/products.repository";
 import { parseProductsFile } from "../service/parseProductsFile";
 
@@ -79,27 +79,38 @@ const ImportDialog = ({
 			const rows = await parseProductsFile(file);
 
 			let imported = 0;
+			let updated = 0;
 			let skipped = 0;
 
 			for (const row of rows) {
 				const code = Number(row.code);
+				const name = row.name;
+				const price = Number(row.price);
 				const existing = await getProductByCode(code);
+
 				if (existing) {
-					skipped++;
+					const sameName = existing.name === name;
+					const samePrice = existing.price === price;
+
+					if (sameName && samePrice) {
+						skipped++;
+						continue;
+					}
+
+					await updateProduct(existing.id, {
+						...(!sameName && { name }),
+						...(!samePrice && { price }),
+					});
+					updated++;
 					continue;
 				}
 
-				const product: CreateProduct = {
-					code,
-					name: row.name,
-					price: Number(row.price),
-				};
-				await createProduct(product);
+				await createProduct({ code, name, price });
 				imported++;
 			}
 
 			alert(
-				`Importación completada: ${imported} importados, ${skipped} omitidos (ya existían)`,
+				`Importación completada: ${imported} importados, ${updated} actualizados, ${skipped} omitidos (sin cambios)`,
 			);
 			onImportSuccess?.();
 			setOpen(false);

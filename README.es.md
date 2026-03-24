@@ -20,6 +20,9 @@
 - Gestión de **registro / inventario**
 - CRUD de **productos** + importación/exportación (CSV/XLSX)
 - Seguimiento de **ventas** y filtros
+- **Reportes de ventas** para usuarios no logeados (ícono bandera + motivo, mínimo 20 caracteres)
+- **Acciones admin** en detalle de venta: anular reporte o eliminar venta
+- El **total de ventas excluye ventas reportadas** en el resumen principal
 - **Base de datos local** con SQLite (Tauri SQL plugin)
 
 ## UX del Registro
@@ -43,7 +46,7 @@
 
 ## Estructura del proyecto
 
-```text
+```txt
 src/
   app/            App base + router
   components/     Componentes compartidos (Header, ui/*)
@@ -85,6 +88,12 @@ bun tauri dev
 ## Base de datos (SQLite)
 
 Esta app usa SQLite a través de Tauri.
+
+Adiciones recientes del esquema incluyen `sale_reports` para persistir:
+
+- `sale_id` (único por venta)
+- `reason`
+- `reported_at` (timestamp)
 
 Si necesitas agregar el plugin de SQL (en este repo ya está incluido):
 
