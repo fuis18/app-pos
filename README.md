@@ -10,7 +10,9 @@
 
 ## Video
 
-<video src="./assets/vid-1.mp4" alt="vid-1"></video>
+<video controls>
+	<source src="./assets/vid-1.mp4" type="video/mp4" />
+</video>
 
 ## Features
 
