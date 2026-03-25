@@ -127,8 +127,6 @@ bun add papaparse @types/papaparse -E
 ```
 
 ```sh
-bun add -D @types/node
-
 bunx shadcn init
 bunx --bun shadcn@latest add form input button checkbox
 bunx --bun shadcn@latest add table pagination
