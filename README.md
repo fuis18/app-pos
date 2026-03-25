@@ -10,9 +10,7 @@
 
 ## Video
 
-<video controls>
-	<source src="./assets/vid-1.mp4" type="video/mp4" />
-</video>
+https://github.com/user-attachments/assets/fd2cc6ef-93e7-41e5-ad91-8fbb90d41433
 
 ## Features
 
