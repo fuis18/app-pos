@@ -113,10 +113,9 @@ You can edit them in `src/constants/config.ts`.
 The following is a reference of the steps/packages used when scaffolding the project.
 
 ```sh
-bun create vite restaurant-pos
-cd ./restaurant-pos
+bun create vite app-pos
+cd ./app-pos
 
-bun add -D esbuild standard -E
 bun add -D tailwindcss @tailwindcss/vite -E
 bun add -D shadcn-ui -E
 
