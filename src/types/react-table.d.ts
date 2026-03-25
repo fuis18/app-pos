@@ -25,5 +25,6 @@ declare module "@tanstack/react-table" {
 		onSoftDelete?: (id: number) => Promise<void>;
 		onHardDelete?: (id: number) => Promise<void>;
 		onReactivate?: (id: number) => Promise<void>;
+		onEditSuccess?: () => void;
 	}
 }

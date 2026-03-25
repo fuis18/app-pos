@@ -31,6 +31,7 @@ export const ProductsPage = () => {
 						onSoftDelete: handleSoftDelete,
 						onHardDelete: handleHardDelete,
 						onReactivate: handleReactivate,
+						onEditSuccess: reloadAll,
 					}}
 					onSelectionChange={setSelectedRows}
 				/>

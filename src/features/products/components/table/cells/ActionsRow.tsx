@@ -33,6 +33,10 @@ export default function ActionsCell({
 		await meta?.onReactivate?.(product.id);
 	};
 
+	const handleEditSuccess = () => {
+		meta?.onEditSuccess?.();
+	};
+
 	return (
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
@@ -51,7 +55,10 @@ export default function ActionsCell({
 						<>
 							{product.state ? (
 								<>
-									<ProductDialog product={product}>
+									<ProductDialog
+										product={product}
+										onSuccess={handleEditSuccess}
+									>
 										<Button variant="ghost" className="w-full justify-start">
 											Editar
 										</Button>
@@ -83,7 +90,7 @@ export default function ActionsCell({
 						</>
 					) : (
 						<>
-							<ProductDialog product={product}>
+							<ProductDialog product={product} onSuccess={handleEditSuccess}>
 								<Button variant="ghost" className="w-full justify-start">
 									Editar
 								</Button>
