@@ -8,12 +8,9 @@
 
 **Desktop POS app** for a restaurant: inventory/registry + sales tracking, built with **React + Vite** and packaged as a **Tauri** app (SQLite).
 
-## Screenshots
+## Video
 
-<img src="./assets/img-1.png" alt="img-1">
-<img src="./assets/img-2.png" alt="img-2">
-<img src="./assets/img-3.png" alt="img-3">
-<img src="./assets/img-4.png" alt="img-4">
+<video src="./assets/vid-1.mp4" alt="vid-1">
 
 ## Features
 

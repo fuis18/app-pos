@@ -4,7 +4,7 @@ version = "1.2.0"
 description = "An APP for a restaurant type POS"
 authors = ["fuis18"]
 license = "MIT"
-repository = "https://github.com/fuis18/restaurant-pos"
+repository = "https://github.com/fuis18/app-pos"
 edition = "2021"
 rust-version = "1.77.2"
 
