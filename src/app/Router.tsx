@@ -7,9 +7,9 @@ const Registry = lazy(() => import("@/pages/Registry"));
 const Products = lazy(() => import("@/pages/Products"));
 const Sales = lazy(() => import("@/pages/Sales"));
 
-import Login from "@/pages/login/Login";
-import SignIn from "@/pages/login/SignUp";
-import Token from "@/pages/login/Token";
+const Login = lazy(() => import("@/pages/login/Login"));
+const SignIn = lazy(() => import("@/pages/login/SignUp"));
+const Token = lazy(() => import("@/pages/login/Token"));
 
 function Router() {
 	return (
