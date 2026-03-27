@@ -34,12 +34,8 @@ export default defineConfig({
 						},
 						{
 							name(moduleId) {
-								if (
-									moduleId.includes(
-										path.resolve(__dirname, "src/components/ui"),
-									)
-								) {
-									return "ui-components";
+								if (moduleId.includes("node_modules/@radix-ui")) {
+									return "vendor-ui";
 								}
 								return null;
 							},
