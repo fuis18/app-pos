@@ -119,7 +119,6 @@ cd ./app-pos
 bun add -D tailwindcss @tailwindcss/vite -E
 bun add -D shadcn-ui -E
 
-bun add @tanstack/react-form -E
 bun add react-hook-form zod -E
 bun add react-router-dom -E
 bun add @tauri-apps/plugin-sql -E
