@@ -1,7 +1,7 @@
 # App POS
 
 ![Tauri](https://img.shields.io/badge/Tauri-2.x-blue)
-![Bun](https://img.shields.io/badge/Bun-runtime-black)
+![pnpm](https://img.shields.io/badge/pnpm-12.x-f69220)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178c6)
 
 [Español](./README.es.md)
@@ -58,28 +58,28 @@ assets/           Screenshots
 
 ## Requirements
 
-- Bun
+- pnpm
 - Rust toolchain (for Tauri builds)
 - OS supported by Tauri (Windows/macOS/Linux)
 
 ## Quick Start (Desktop)
 
 ```sh
-bun install
-bun tauri dev
+pnpm install
+pnpm exec tauri dev
 ```
 
 ## Scripts
 
 ```sh
 # web dev
-bun dev
+pnpm dev
 
 # typecheck + web build
-bun run build
+pnpm run build
 
 # desktop dev
-bun tauri dev
+pnpm exec tauri dev
 ```
 
 ## Database (SQLite)
@@ -113,30 +113,30 @@ You can edit them in `src/constants/config.ts`.
 The following is a reference of the steps/packages used when scaffolding the project.
 
 ```sh
-bun create vite app-pos
+pnpm create vite app-pos
 cd ./app-pos
 
-bun add -D tailwindcss @tailwindcss/vite -E
-bun add -D shadcn-ui -E
+pnpm add -D tailwindcss @tailwindcss/vite --save-exact
+pnpm add -D shadcn-ui --save-exact
 
-bun add react-hook-form zod -E
-bun add react-router-dom -E
-bun add @tauri-apps/plugin-sql -E
-bun add papaparse @types/papaparse -E
+pnpm add react-hook-form zod --save-exact
+pnpm add react-router-dom --save-exact
+pnpm add @tauri-apps/plugin-sql --save-exact
+pnpm add papaparse @types/papaparse --save-exact
 ```
 
 ```sh
-bunx shadcn init
-bunx --bun shadcn@latest add form input button checkbox
-bunx --bun shadcn@latest add table pagination
-bunx --bun shadcn@latest add dialog button-group
-bunx --bun shadcn@latest add popover dropdown-menu
-bunx --bun shadcn@latest add combobox calendar
+pnpm dlx shadcn init
+pnpm dlx shadcn@latest add form input button checkbox
+pnpm dlx shadcn@latest add table pagination
+pnpm dlx shadcn@latest add dialog button-group
+pnpm dlx shadcn@latest add popover dropdown-menu
+pnpm dlx shadcn@latest add combobox calendar
 ```
 
 ```sh
-bun add -D @tauri-apps/cli@latest
-bun add @tauri-apps/api
+pnpm add -D @tauri-apps/cli@latest
+pnpm add @tauri-apps/api
 
-bun tauri init
+pnpm exec tauri init
 ```
